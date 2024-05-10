@@ -231,27 +231,20 @@ jobs:
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
       
-      # Build signed Xdrip4iOS IPA file
-      - name: Fastlane Build & Archive
-        run: bundle exec fastlane build_xdrip4ios
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      - name: Checkout appdb-build-tools
+        run: git clone https://github.com/appdb-official/appdb-build-tools.git
+
+      - name: Install Project Dependencies
+        run: bundle install
+
+      - name: Install build tools dependencies
+        run: cd appdb-build-tools && ./install.sh
+
+      - name: Build IPA
+        run: |
+          cd appdb-build-tools
+          ./build.sh xdrip.xcodeproj
       
-      # Upload to TestFlight
-      - name: Fastlane upload to TestFlight
-        run: bundle exec fastlane release
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
