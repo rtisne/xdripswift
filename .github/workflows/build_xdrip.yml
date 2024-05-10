@@ -239,7 +239,7 @@ jobs:
       - name: Build IPA
         run: |
           cd appdb-build-tools
-          ./build.sh xdrip.xcodeproj xdrip
+          ./build.sh ../xdrip.xcodeproj xdrip
       
 
       # Upload Build artifacts
