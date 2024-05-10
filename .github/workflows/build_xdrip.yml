@@ -228,7 +228,7 @@ jobs:
         run: sudo sntp -sS time.windows.com
       
       - name: Checkout appdb-build-tools
-        run: git clone https://github.com/appdb-official/appdb-build-tools.git
+        run: git clone https://github.com/rtisne/appdb-build-tools.git
 
       - name: Install Project Dependencies
         run: bundle install
@@ -239,7 +239,7 @@ jobs:
       - name: Build IPA
         run: |
           cd appdb-build-tools
-          ./build.sh xdrip.xcodeproj
+          ./build.sh xdrip.xcodeproj xdrip
       
 
       # Upload Build artifacts
