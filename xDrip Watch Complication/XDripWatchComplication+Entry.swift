@@ -8,7 +8,6 @@
 
 import WidgetKit
 import SwiftUI
-import WatchKit
 
 extension XDripWatchComplication {
     struct Entry: TimelineEntry {
